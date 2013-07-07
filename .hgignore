@@ -1,0 +1,8 @@
+# switch to regexp syntax.
+syntax: regexp
+^\.settings/
+^\.externalToolBuilders/
+^\.project
+^\.classpath
+\.class$
+\.war$

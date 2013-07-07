@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="falarmitme" basedir=".">
+
+    <property file="build.properties" />
+
+    <path id="catalina.ant.classpath">
+        <fileset dir="${tomcat.home}/bin">
+            <include name="tomcat-juli.jar"/>
+        </fileset>
+        <fileset dir="${tomcat.home}/lib">
+            <include name="catalina-ant.jar"/>
+            <include name="tomcat-coyote.jar"/>
+            <include name="tomcat-util.jar"/>
+        </fileset>
+    </path>
+
+    <target name="build-and-deploy" depends="build-war,undeploy,deploy" />
+
+    <target name="start">
+        <exec executable="${tomcat.home}/bin/startup.sh"></exec>
+    </target>
+
+    <target name="stop">
+        <exec executable="${tomcat.home}/bin/shutdown.sh"></exec>
+    </target>
+
+    <taskdef name="deploy" classname="org.apache.catalina.ant.DeployTask" classpathref="catalina.ant.classpath"/>
+    <taskdef name="undeploy" classname="org.apache.catalina.ant.UndeployTask" classpathref="catalina.ant.classpath"/>
+
+    <target name="deploy">
+        <deploy url="${tomcat.manager.url}"
+                username="${tomcat.manager.username}"
+                password="${tomcat.manager.password}"
+                path="/${project.name}"
+                war="file:${basedir}/${build.directory}/${war.file.name}"/>
+    </target>
+
+    <target name="undeploy">
+        <undeploy url="${tomcat.manager.url}"
+                username="${tomcat.manager.username}"
+                password="${tomcat.manager.password}"
+                path="/${project.name}"/>
+    </target>
+
+    <target name="build-war">
+        <mkdir dir="${build.directory}" />
+        <delete file="${build.directory}/${war.file.name}" />
+        <war warfile="${build.directory}/${war.file.name}" webxml="${web.xml.file}">
+            <classes dir="${classes.directory}" />
+            <fileset dir="${web.directory}">
+                <exclude name="WEB-INF/web.xml" />
+            </fileset>
+        </war>
+    </target>
+</project>
