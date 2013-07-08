@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="falarmitme" basedir=".">
-
+<project name="falarmitme" basedir="." default="build-and-deploy">
+	<property environment="env" />
     <property file="build.properties" />
-
     <path id="catalina.ant.classpath">
         <fileset dir="${tomcat.home}/bin">
             <include name="tomcat-juli.jar"/>
@@ -13,7 +12,7 @@
             <include name="tomcat-util.jar"/>
         </fileset>
     </path>
-
+	
     <target name="build-and-deploy" depends="build-war,undeploy,deploy" />
 
     <target name="start">
