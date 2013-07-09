@@ -5,4 +5,4 @@ syntax: regexp
 ^\.project
 ^\.classpath
 \.class$
-\.war$
+\.[jw]ar$

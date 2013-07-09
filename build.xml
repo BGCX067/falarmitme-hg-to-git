@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="falarmitme" basedir="." default="build-and-deploy">
+<project name="falarmitme" basedir="." default="build-and-deploy" xmlns:ivy="antlib:org.apache.ivy.ant">
 	<property environment="env" />
     <property file="build.properties" />
     <path id="catalina.ant.classpath">
@@ -12,6 +12,10 @@
             <include name="tomcat-util.jar"/>
         </fileset>
     </path>
+	
+	<target name="resolve" description="retrieve dependencies with ivy">
+		 <ivy:retrieve pattern="${web.directory}/WEB-INF/lib/[artifact]-[revision].[ext]"/>
+	</target>
 	
     <target name="build-and-deploy" depends="build-war,undeploy,deploy" />
 
@@ -41,7 +45,7 @@
                 path="/${project.name}"/>
     </target>
 
-    <target name="build-war">
+    <target name="build-war" depends="resolve">
         <mkdir dir="${build.directory}" />
         <delete file="${build.directory}/${war.file.name}" />
         <war warfile="${build.directory}/${war.file.name}" webxml="${web.xml.file}">
