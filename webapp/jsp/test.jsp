@@ -1,4 +1,4 @@
 <html>
     <head></head>
-    <body>Hello1 World1</body>
+    <body>Hello ${text}</body>
 </html>

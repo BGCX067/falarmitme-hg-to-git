@@ -12,11 +12,11 @@
             <include name="tomcat-util.jar"/>
         </fileset>
     </path>
-	
-	<target name="resolve" description="retrieve dependencies with ivy">
-		 <ivy:retrieve pattern="${web.directory}/WEB-INF/lib/[artifact]-[revision].[ext]"/>
-	</target>
-	
+
+    <target name="resolve" description="retrieve dependencies with ivy">
+        <ivy:retrieve pattern="${web.directory}/WEB-INF/lib/[artifact]-[type]-[revision].[ext]"/>
+    </target>
+
     <target name="build-and-deploy" depends="build-war,undeploy,deploy" />
 
     <target name="start">

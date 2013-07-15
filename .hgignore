@@ -6,3 +6,4 @@ syntax: regexp
 ^\.classpath
 \.class$
 \.[jw]ar$
+\.log$
